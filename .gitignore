@@ -1,0 +1,173 @@
+# ============================
+# Node.js
+# ============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ============================
+# Environment Variables
+# ============================
+.env
+.env.*
+!.env.example
+
+# ============================
+# Build Output
+# ============================
+dist/
+build/
+out/
+
+# ============================
+# Logs
+# ============================
+logs/
+*.log
+
+# ============================
+# Cache
+# ============================
+.cache/
+.parcel-cache/
+.eslintcache
+.vite/
+
+# ============================
+# Hardhat
+# ============================
+artifacts/
+cache/
+typechain/
+typechain-types/
+
+# ============================
+# Truffle (if used)
+# ============================
+build/contracts/
+
+# ============================
+# Foundry (if used)
+# ============================
+out/
+broadcast/
+cache_forge/
+
+# ============================
+# Python
+# ============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Python Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python Testing
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ============================
+# Database
+# ============================
+*.db
+*.sqlite
+*.sqlite3
+dump.sql
+
+# ============================
+# Coverage
+# ============================
+coverage/
+
+# ============================
+# Temporary Files
+# ============================
+tmp/
+temp/
+*.tmp
+*.temp
+
+# ============================
+# Operating System Files
+# ============================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ============================
+# VS Code
+# ============================
+.vscode/
+
+# ============================
+# JetBrains IDEs
+# ============================
+.idea/
+*.iml
+
+# ============================
+# Eclipse
+# ============================
+.project
+.classpath
+.settings/
+
+# ============================
+# NetBeans
+# ============================
+nbproject/
+
+# ============================
+# macOS
+# ============================
+.AppleDouble
+.LSOverride
+
+# ============================
+# Linux
+# ============================
+*~
+
+# ============================
+# Windows
+# ============================
+ehthumbs.db
+
+# ============================
+# Generated Files
+# ============================
+*.pid
+*.seed
+*.pid.lock
+
+# ============================
+# Solidity Coverage
+# ============================
+coverage.json
+
+# ============================
+# Secrets
+# ============================
+wallet.json
+private-key.txt
+mnemonic.txt
+
+# ============================
+# Miscellaneous
+# ============================
+*.bak
+*.swp
+*.swo
+*.orig
