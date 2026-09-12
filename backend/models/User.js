@@ -84,8 +84,6 @@ userSchema.methods.resetLoginAttempts = async function () {
     await this.save();
 };
 
-userSchema.index({ voterId: 1 });
-userSchema.index({ email: 1 });
 userSchema.index({ boothId: 1 });
 userSchema.index({ hasVoted: 1 });
 

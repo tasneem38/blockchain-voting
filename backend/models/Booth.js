@@ -23,6 +23,6 @@ const boothSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-boothSchema.index({ boothId: 1 });
+// Schema indexes automatically created via unique: true
 
 module.exports = mongoose.model('Booth', boothSchema);

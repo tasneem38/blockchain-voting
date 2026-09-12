@@ -29,7 +29,6 @@ const candidateSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-candidateSchema.index({ candidateId: 1 });
 candidateSchema.index({ boothId: 1 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);
