@@ -335,22 +335,36 @@ backend/
 
 The system supports two modes:
 
-### Mock Mode (Default)
-Activated automatically when `CONTRACT_ADDRESS` is the zero address or a known placeholder. In this mode:
-- Vote transactions return a randomly generated fake `txHash`
-- Election open/close state is persisted in **MongoDB** (via `ElectionState` model)
-- No Ethereum node or wallet is needed
+### Mock Mode
+Activated automatically when `CONTRACT_ADDRESS` is the zero address or a placeholder. In this mode:
+- Vote transactions return a randomly generated fake `txHash`.
+- Election open/close state is persisted in **MongoDB** (via `ElectionState` model).
+- No Ethereum node or wallet is needed.
 
-### Live Blockchain Mode
-To enable, set all three blockchain env vars to real values pointing to a deployed `VotingSystem` contract:
+### Live Blockchain Mode (Ganache / Ethereum Testnet)
+To run in **Live Blockchain Mode**:
+
+1. **Start Ganache:**
+   ```bash
+   npx ganache
+   ```
+   Listens on `http://127.0.0.1:8545` with 10 test accounts pre-funded with 1,000 ETH.
+
+2. **Deploy the `VotingSystem.sol` Smart Contract:**
+   ```bash
+   node scripts/deployContract.js
+   # Or: npm run deploy:contract
+   ```
+   This script compiles `backend/contracts/VotingSystem.sol`, deploys it to Ganache, updates `backend/contracts/VotingSystem.json` with the compiled ABI, and populates `CONTRACT_ADDRESS` and `ADMIN_PRIVATE_KEY` in `backend/.env`.
+
+3. **Verify with MetaMask:**
+   Add `Ganache Local` network (`http://127.0.0.1:8545`, Chain ID `1337`), import Account 0 private key from `.env`, and select `Ganache Local` to view your live ETH balance and transaction costs!
 
 ```env
-BLOCKCHAIN_RPC_URL=https://your-rpc-endpoint.com
+BLOCKCHAIN_RPC_URL=http://127.0.0.1:8545
 CONTRACT_ADDRESS=0xYourDeployedContractAddress
 ADMIN_PRIVATE_KEY=0xYourAdminPrivateKey
 ```
-
-The contract ABI must be placed at `backend/contracts/VotingSystem.json`.
 
 ---
 

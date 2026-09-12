@@ -95,16 +95,13 @@ export default function ConfirmationPage() {
           )}
 
           {/* Explorer link */}
-          {explorerUrl !== '#' && (
-            <a
-              href={explorerUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-sm font-semibold mb-6 transition-colors"
-            >
-              Verify on Blockchain
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+          {txHash !== 'N/A' && txHash !== 'ALREADY_VOTED' && (
+            <div className="mb-6">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Verified on Local Ganache Blockchain
+              </span>
+            </div>
           )}
 
           {/* Countdown */}

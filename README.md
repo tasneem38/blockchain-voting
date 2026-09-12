@@ -254,22 +254,58 @@ Then open your browser at **http://localhost:5173**
 
 ---
 
-## Tech Stack
-
 ### Backend
 | Technology | Purpose |
 |---|---|
 | **Express.js** | HTTP server & REST API framework |
 | **MongoDB + Mongoose** | Primary database & ODM |
-| **Redis (ioredis)** | OTP storage, JWT blacklist, rate limiting |
+| **Redis (ioredis)** | OTP storage, JWT blacklist, rate limiting (with in-memory fallback) |
+| **Ganache** | Local Ethereum blockchain development node |
+| **MetaMask** | Wallet for tracking local blockchain accounts & ETH balances |
+| **Solidity (v0.8.20)** | `VotingSystem.sol` smart contract language |
+| **ethers.js (v6)** | Ethereum blockchain RPC & transaction provider |
 | **Socket.io** | Real-time vote & election status updates |
 | **Nodemailer** | OTP delivery via Gmail SMTP |
 | **bcryptjs** | Password hashing |
 | **jsonwebtoken** | JWT auth token generation & verification |
-| **ethers.js** | Ethereum blockchain integration |
 | **helmet** | Secure HTTP headers |
 | **express-rate-limit** | API rate limiting |
 | **express-validator** | Request input validation |
+
+---
+
+## ⛓️ Ethereum Blockchain Setup (Ganache & MetaMask)
+
+The system seamlessly runs in **Live Blockchain Mode** using a local Ganache Ethereum network and `VotingSystem.sol` smart contract.
+
+### 1. Start Local Ganache Node
+In a dedicated terminal window, run:
+```bash
+npx ganache
+```
+This spins up a local Ethereum network listening on `http://127.0.0.1:8545` (Chain ID: `1337`) with 10 pre-funded test accounts (1,000 ETH each).
+
+### 2. Deploy Smart Contract to Ganache
+In your `backend` directory, run:
+```bash
+node scripts/deployContract.js
+# Or: npm run deploy:contract
+```
+This script will:
+* Compile `backend/contracts/VotingSystem.sol`.
+* Deploy the contract to your local Ganache blockchain.
+* Automatically write the deployed `CONTRACT_ADDRESS` and `ADMIN_PRIVATE_KEY` directly into `backend/.env`.
+
+### 3. Connect MetaMask (Optional Visual Verification)
+To view account balances and gas fee deductions in browser:
+1. Open **MetaMask** in Edge/Chrome.
+2. Add a custom network:
+   * **Network Name:** `Ganache Local`
+   * **RPC URL:** `http://127.0.0.1:8545`
+   * **Chain ID:** `1337`
+   * **Currency Symbol:** `ETH`
+3. Click **Import Account** and paste Account 0 private key from `backend/.env`.
+4. Switch network view to **`Ganache Local`** to see your **~999.99 ETH** balance update live with each cast vote!
 
 ### Frontend
 | Technology | Purpose |
