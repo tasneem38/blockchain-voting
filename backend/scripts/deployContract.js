@@ -13,10 +13,20 @@ async function main() {
         : '0xe930c0080d95822d778396e2722e2e8136b7fe25e2d83828c05e70176e25dcfe';
 
     const provider = new ethers.JsonRpcProvider(rpcUrl);
-    const wallet = new ethers.Wallet(privateKey, provider);
+    let wallet = new ethers.Wallet(privateKey, provider);
 
     console.log(`📡 Connected to RPC: ${rpcUrl}`);
     console.log(`🔑 Deploying from Account: ${wallet.address}`);
+
+    const balance = await provider.getBalance(wallet.address);
+    console.log(`💰 Account Balance: ${ethers.formatEther(balance)} ETH`);
+
+    if (balance === 0n) {
+        console.error(`\n❌ ERROR: Account ${wallet.address} has 0 ETH balance on Ganache!`);
+        console.error(`💡 This happens when Ganache is restarted and generates new account private keys.`);
+        console.error(`👉 Fix: Copy Private Key (0) from your running Ganache terminal and paste it into backend/.env as ADMIN_PRIVATE_KEY=0x...\n`);
+        process.exit(1);
+    }
 
     // Compile VotingSystem.sol using solc if available
     let abi, bytecode;

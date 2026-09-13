@@ -15,6 +15,21 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required'],
         minlength: [6, 'Password must be at least 6 characters'],
     },
+    fullName: {
+        type: String,
+        default: 'Registered Voter',
+        trim: true,
+    },
+    epicNumber: {
+        type: String,
+        trim: true,
+        default: null,
+    },
+    aadhaarLast4: {
+        type: String,
+        trim: true,
+        default: 'XXXX',
+    },
     email: {
         type: String,
         required: [true, 'Email is required'],

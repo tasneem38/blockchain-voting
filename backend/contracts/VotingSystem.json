@@ -30,9 +30,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "address",
-          "name": "voter",
-          "type": "address"
+          "internalType": "string",
+          "name": "voterId",
+          "type": "string"
         },
         {
           "indexed": false,
@@ -103,6 +103,11 @@
     },
     {
       "inputs": [
+        {
+          "internalType": "string",
+          "name": "voterId",
+          "type": "string"
+        },
         {
           "internalType": "string",
           "name": "candidateId",
@@ -180,9 +185,9 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
+          "internalType": "string",
+          "name": "voterId",
+          "type": "string"
         }
       ],
       "name": "hasVoted",
@@ -207,6 +212,25 @@
       "name": "openElection",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "voterHasVoted",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     }
   ]

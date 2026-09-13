@@ -13,6 +13,26 @@ const boothSchema = new mongoose.Schema({
         required: [true, 'Location is required'],
         trim: true,
     },
+    state: {
+        type: String,
+        default: 'Karnataka',
+        trim: true,
+    },
+    district: {
+        type: String,
+        default: 'Bengaluru Urban',
+        trim: true,
+    },
+    constituency: {
+        type: String,
+        default: 'BTM Layout',
+        trim: true,
+    },
+    wardNumber: {
+        type: String,
+        default: 'Ward 172',
+        trim: true,
+    },
     isActive: {
         type: Boolean,
         default: true,
@@ -22,7 +42,5 @@ const boothSchema = new mongoose.Schema({
         default: 0,
     },
 }, { timestamps: true });
-
-// Schema indexes automatically created via unique: true
 
 module.exports = mongoose.model('Booth', boothSchema);

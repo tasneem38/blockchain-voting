@@ -1,10 +1,12 @@
 const express = require('express');
 const { body } = require('express-validator');
-const { login, verifyOTP, logout, resendOTP } = require('../controllers/authController');
+const { login, verifyOTP, logout, resendOTP, getMe } = require('../controllers/authController');
 const authMiddleware = require('../middleware/authMiddleware');
 const { loginLimiter, otpLimiter, resendOTPLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
+
+router.get('/me', authMiddleware, getMe);
 
 router.post('/login',
     loginLimiter,

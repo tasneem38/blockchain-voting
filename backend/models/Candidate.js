@@ -22,6 +22,16 @@ const candidateSchema = new mongoose.Schema({
         type: String,
         default: null, // URL to party symbol image
     },
+    constituency: {
+        type: String,
+        default: 'BTM Layout',
+        trim: true,
+    },
+    electionType: {
+        type: String,
+        default: 'Karnataka State Assembly',
+        trim: true,
+    },
     boothId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Booth',

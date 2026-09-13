@@ -40,14 +40,14 @@ const castVote = async (req, res) => {
         }
 
         // 4. Double check blockchain for previous vote
-        const alreadyVotedOnChain = await hasVotedOnChain(user.walletAddress || userId);
+        const alreadyVotedOnChain = await hasVotedOnChain(voterId || user.voterId);
         if (alreadyVotedOnChain) {
             return res.status(403).json({ success: false, message: 'Already voted on blockchain' });
         }
 
         // 5. Submit to Blockchain
         const { txHash } = await castVoteOnChain(
-            user.walletAddress || userId, 
+            voterId || user.voterId, 
             candidateId, 
             user.boothId.toString()
         );

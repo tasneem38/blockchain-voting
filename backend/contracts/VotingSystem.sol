@@ -11,12 +11,12 @@ contract VotingSystem {
         uint256 voteCount;
     }
 
-    mapping(address => bool) public hasVoted;
+    mapping(string => bool) public voterHasVoted;
     mapping(string => uint256) public candidateVotes;
     string[] public candidateList;
     mapping(string => bool) private candidateExists;
 
-    event VoteCast(address indexed voter, string candidateId, string boothId);
+    event VoteCast(string indexed voterId, string candidateId, string boothId);
     event ElectionOpened(uint256 endTimestamp);
     event ElectionClosed();
 
@@ -49,10 +49,10 @@ contract VotingSystem {
         emit ElectionClosed();
     }
 
-    function castVote(string calldata candidateId, string calldata boothId) external onlyWhenOpen {
-        require(!hasVoted[msg.sender], "Voter has already voted");
+    function castVote(string calldata voterId, string calldata candidateId, string calldata boothId) external onlyWhenOpen {
+        require(!voterHasVoted[voterId], "Voter has already voted");
 
-        hasVoted[msg.sender] = true;
+        voterHasVoted[voterId] = true;
 
         if (!candidateExists[candidateId]) {
             candidateExists[candidateId] = true;
@@ -61,7 +61,11 @@ contract VotingSystem {
 
         candidateVotes[candidateId] += 1;
 
-        emit VoteCast(msg.sender, candidateId, boothId);
+        emit VoteCast(voterId, candidateId, boothId);
+    }
+
+    function hasVoted(string calldata voterId) external view returns (bool) {
+        return voterHasVoted[voterId];
     }
 
     function getResults() external view returns (CandidateResult[] memory) {

@@ -19,10 +19,54 @@ import LoadingSpinner from '../components/shared/LoadingSpinner';
 import { statusColor, formatDate } from '../utils/helpers';
 
 // ─── OVERVIEW TAB ───────────────────────────────────────────────────────────
-function OverviewTab({ metrics, loading }) {
+function OverviewTab({ metrics, loading, selectedConstituency, setSelectedConstituency, selectedBooth, setSelectedBooth, onRefresh }) {
   return (
     <div>
-      <h2 className="text-xl font-extrabold text-white mb-5" style={{ fontFamily: 'Syne, sans-serif' }}>Overview</h2>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 className="text-xl font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif' }}>
+            Statewide Election Overview
+          </h2>
+          <p className="text-slate-400 text-xs">Real-time voting turnout & regional metrics across Karnataka</p>
+        </div>
+
+        {/* Regional Filters */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Constituency Filter */}
+          <div>
+            <select
+              value={selectedConstituency}
+              onChange={(e) => {
+                setSelectedConstituency(e.target.value);
+                setSelectedBooth('');
+              }}
+              className="bg-slate-800 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">All Karnataka Constituencies</option>
+              {metrics.constituencies?.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Booth Filter */}
+          <div>
+            <select
+              value={selectedBooth}
+              onChange={(e) => setSelectedBooth(e.target.value)}
+              className="bg-slate-800 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">All Polling Stations</option>
+              {metrics.booths
+                ?.filter(b => !selectedConstituency || b.constituency === selectedConstituency)
+                .map((b) => (
+                  <option key={b._id} value={b._id}>{b.boothId} — {b.location}</option>
+                ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard label="Total Voters"  value={metrics.totalVoters}  icon={Users}     color="blue"   loading={loading} />
         <MetricCard label="Votes Cast"    value={metrics.votesCast}    icon={Vote}      color="green"  loading={loading} />
@@ -484,6 +528,10 @@ export default function AdminDashboard() {
   const [metricsLoading, setMetricsLoading] = useState(false);
   const [booths, setBooths] = useState([]);
 
+  // Regional Filter State
+  const [selectedConstituency, setSelectedConstituency] = useState('');
+  const [selectedBooth, setSelectedBooth] = useState('');
+
   const { logout } = useAuth();
   const { socket } = useSocket();
   const navigate = useNavigate();
@@ -491,7 +539,11 @@ export default function AdminDashboard() {
   const fetchMetrics = useCallback(async () => {
     setMetricsLoading(true);
     try {
-      const res = await api.get('/admin/overview');
+      const params = new URLSearchParams();
+      if (selectedConstituency) params.append('constituency', selectedConstituency);
+      if (selectedBooth) params.append('boothId', selectedBooth);
+
+      const res = await api.get(`/admin/overview?${params.toString()}`);
       setMetrics(res.data || {});
     } catch { 
       setMetrics({
@@ -502,18 +554,14 @@ export default function AdminDashboard() {
       });
     }
     finally { setMetricsLoading(false); }
-  }, []);
+  }, [selectedConstituency, selectedBooth]);
 
   const fetchBooths = useCallback(async () => {
     try {
       const res = await api.get('/admin/booths');
       setBooths(res.data?.booths || res.data || []);
     } catch { 
-      setBooths([
-        { id: 'B001', location: 'City Hall', voterCount: 450, active: true },
-        { id: 'B002', location: 'Public Library', voterCount: 380, active: true },
-        { id: 'B003', location: 'Community Center', voterCount: 420, active: false },
-      ]);
+      setBooths([]);
     }
   }, []);
 
@@ -530,7 +578,17 @@ export default function AdminDashboard() {
 
   const renderTab = () => {
     switch (activeTab) {
-      case 'overview':   return <OverviewTab metrics={metrics} loading={metricsLoading} />;
+      case 'overview':   return (
+        <OverviewTab 
+          metrics={metrics} 
+          loading={metricsLoading}
+          selectedConstituency={selectedConstituency}
+          setSelectedConstituency={setSelectedConstituency}
+          selectedBooth={selectedBooth}
+          setSelectedBooth={setSelectedBooth}
+          onRefresh={fetchMetrics}
+        />
+      );
       case 'voters':     return <VotersTab booths={booths} />;
       case 'candidates': return <CandidatesTab booths={booths} />;
       case 'booths':     return <BoothsTab />;

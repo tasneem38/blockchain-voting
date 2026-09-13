@@ -39,7 +39,7 @@ const castVoteOnChain = async (voterAddress, candidateId, boothId) => {
         return { txHash: '0x' + Math.random().toString(16).slice(2, 42), blockNumber: 123456 };
     }
     try {
-        const tx = await contract.castVote(candidateId, boothId);
+        const tx = await contract.castVote(voterAddress.toString(), candidateId, boothId);
         const receipt = await tx.wait();
         return { txHash: receipt.hash, blockNumber: receipt.blockNumber };
     } catch (err) {
@@ -51,7 +51,7 @@ const castVoteOnChain = async (voterAddress, candidateId, boothId) => {
 const hasVotedOnChain = async (voterAddress) => {
     if (isMockMode) return false;
     try {
-        return await contract.hasVoted(voterAddress);
+        return await contract.hasVoted(voterAddress.toString());
     } catch (err) {
         return false;
     }

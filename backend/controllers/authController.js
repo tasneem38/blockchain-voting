@@ -205,4 +205,36 @@ const resendOTP = async (req, res) => {
     }
 };
 
-module.exports = { login, verifyOTP, logout, resendOTP };
+/**
+ * Get Current Logged-in User Profile (with Booth & Karnataka Regional Details)
+ */
+const getMe = async (req, res) => {
+    try {
+        if (req.user.role === 'ADMIN' || req.user.role === 'SUPER_ADMIN' || req.user.role === 'BOOTH_ADMIN') {
+            const admin = await Admin.findById(req.user.id).populate('boothId');
+            return res.status(200).json({ success: true, admin });
+        }
+
+        const user = await User.findById(req.user.id).populate('boothId');
+        if (!user) return res.status(404).json({ success: false, message: 'Voter not found' });
+
+        return res.status(200).json({
+            success: true,
+            voter: {
+                id: user._id,
+                voterId: user.voterId,
+                fullName: user.fullName || 'Registered Voter',
+                epicNumber: user.epicNumber || `KA/01/172/${user.voterId}`,
+                aadhaarLast4: user.aadhaarLast4 || 'XXXX',
+                email: user.email,
+                hasVoted: user.hasVoted,
+                txHash: user.txHash,
+                booth: user.boothId
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ success: false, message: 'Failed to fetch user profile' });
+    }
+};
+
+module.exports = { login, verifyOTP, logout, resendOTP, getMe };
