@@ -3,20 +3,44 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
-    secure: process.env.EMAIL_PORT == 465, // true for 465, false for other ports
+    secure: process.env.EMAIL_PORT == 465,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
     },
 });
 
+// Roles that should never receive emails — OTP goes to terminal only
+const TERMINAL_ONLY_ROLES = new Set(['ADMIN', 'SUPER_ADMIN', 'BOOTH_ADMIN']);
+
+// Fake/test domains that should not be emailed
+const FAKE_DOMAINS = new Set(['test.com', 'demo.com', 'example.com', 'fake.com', 'local.com']);
+
 /**
- * Sends OTP email to voter
+ * Sends OTP email to voter (or prints to terminal for admin/booth roles & test accounts)
  * @param {string} toEmail 
  * @param {string} voterId 
  * @param {string} otp 
+ * @param {string} [role='VOTER']  - role of the user (ADMIN, BOOTH_ADMIN, SUPER_ADMIN, VOTER)
  */
-const sendOTPEmail = async (toEmail, voterId, otp) => {
+const sendOTPEmail = async (toEmail, voterId, otp, role = 'VOTER') => {
+    const domain = (toEmail || '').split('@')[1]?.toLowerCase();
+    const isTerminalOnly = TERMINAL_ONLY_ROLES.has(role) || FAKE_DOMAINS.has(domain);
+
+    // Always log to terminal
+    console.log('\n' + '='.repeat(50));
+    if (TERMINAL_ONLY_ROLES.has(role)) {
+        console.log(`🔐 [${role} OTP] ID: ${voterId}  →  OTP: ${otp}`);
+    } else {
+        console.log(`🔑 [OTP] Voter: ${voterId}  →  OTP: ${otp}`);
+    }
+    console.log('='.repeat(50) + '\n');
+
+    if (isTerminalOnly) {
+        // Do not attempt email delivery for admin roles or test domains
+        return;
+    }
+
     const mailOptions = {
         from: process.env.EMAIL_FROM,
         to: toEmail,
@@ -39,12 +63,12 @@ const sendOTPEmail = async (toEmail, voterId, otp) => {
     };
 
     try {
-        console.log(`\n🔑 [TESTING] OTP for ${voterId}: ${otp}\n`);
         await transporter.sendMail(mailOptions);
     } catch (err) {
-        console.error('Email send failure:', err.message);
-        throw new Error('Failed to send OTP email');
+        // Log the error but don't crash — OTP was already printed to terminal
+        console.error('Email send failure (OTP already shown in terminal):', err.message);
     }
 };
 
 module.exports = sendOTPEmail;
+

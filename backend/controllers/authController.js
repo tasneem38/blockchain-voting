@@ -61,10 +61,11 @@ const login = async (req, res) => {
         // Identity verified, generate OTP
         const otp = generateOTP();
         await setOTP(voterId, otp, 300); // 5 min TTL
-        
-        // Send Email
-        await sendOTPEmail(user.email, voterId, otp);
-        await logAction('OTP_SENT', voterId, isAdmin ? 'ADMIN' : 'VOTER', { success: true, ipAddress: req.ip });
+
+        // Send OTP — admin/booth roles print to terminal only; real voter emails get delivered
+        const userRole = isAdmin ? (user.role || 'ADMIN') : 'VOTER';
+        await sendOTPEmail(user.email, voterId, otp, userRole);
+        await logAction('OTP_SENT', voterId, userRole, { success: true, ipAddress: req.ip });
 
         return res.status(200).json({ 
             success: true, 
@@ -196,7 +197,7 @@ const resendOTP = async (req, res) => {
         
         const otp = generateOTP();
         await setOTP(voterId, otp, 300);
-        await sendOTPEmail(user.email, voterId, otp);
+        await sendOTPEmail(user.email, voterId, otp, 'VOTER');
         await logAction('OTP_SENT', voterId, 'VOTER', { success: true, metadata: { type: 'resend' } });
 
         return res.status(200).json({ success: true, message: 'OTP resent' });
