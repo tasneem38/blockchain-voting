@@ -52,12 +52,12 @@ export default function VotingPage() {
     setSubmitting(true);
     try {
       const res = await api.post('/vote', { candidateId: selectedId });
-      navigate('/confirmation', { state: { txHash: res.data.txHash || res.data.transactionHash || 'N/A' } });
+      navigate('/confirmation', { state: { txHash: res.data.txHash || res.data.transactionHash || 'N/A', voterProfile } });
     } catch (err) {
       const status = err.response?.status;
       const msg = err.response?.data?.message || '';
       if (status === 403 && msg.toLowerCase().includes('already')) {
-        navigate('/confirmation', { state: { txHash: 'ALREADY_VOTED' } });
+        navigate('/confirmation', { state: { txHash: 'ALREADY_VOTED', voterProfile } });
       } else if (status === 403 && msg.toLowerCase().includes('booth')) {
         toast.error('You are not assigned to this booth');
         setShowModal(false);
