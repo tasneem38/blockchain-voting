@@ -107,13 +107,15 @@ Click the badge below to watch the video demonstration of the application:
 
 ## System Requirements
 
-| Software | Version | Notes |
+| Component | Required Version | Purpose & Notes |
 |---|---|---|
-| Node.js | v18 or higher | Required for both backend and frontend |
-| npm | v9 or higher | Comes with Node.js |
-| MongoDB | Atlas (cloud) or v6+ local | Database for all application data |
-| Redis | v6 or higher | Session/OTP storage; use Memurai on Windows |
-| Git | Any | To clone the repo |
+| **Node.js** | `v18.0.0` or higher | JavaScript runtime for backend API & Vite frontend |
+| **npm** | `v9.0.0` or higher | Package manager (bundled with Node.js) |
+| **MongoDB** | Atlas (Cloud) or `v6.0+` (Local) | Primary database (Users, Candidates, Booths, Audit Logs) |
+| **Redis** | `v6.0` or higher | OTP caching, JWT token blacklisting & rate-limiting (Memurai on Windows) |
+| **Ganache** (Optional) | `v7.0+` or `npx ganache` | Local Ethereum blockchain node (`http://127.0.0.1:8545`) |
+| **MetaMask** (Optional) | Latest browser extension | Web3 wallet for tracking ETH balances & gas fee deductions |
+| **Git** | Any | Repository version control |
 
 ---
 
@@ -304,23 +306,40 @@ Then open your browser at **http://localhost:5173**
 
 ---
 
+## Tech Stack
+
+### Frontend
+| Technology | Purpose |
+|---|---|
+| **React 18** | Declarative component-based UI framework |
+| **Vite 5** | Build tool & high-performance dev server |
+| **React Router v6** | Client-side page navigation & protected route guards |
+| **Tailwind CSS v3.4** | Modern utility-first CSS styling & responsive layout |
+| **Recharts** | Interactive real-time election result bar charts |
+| **React QR Code** | Dynamic QR code generator for vote confirmation receipts |
+| **Axios** | HTTP client for REST API communication |
+| **Socket.io Client** | Real-time WebSocket connection for live election statistics |
+| **Lucide React** | Modern iconography library |
+| **React Hot Toast** | Interactive toast notification system |
+
 ### Backend
 | Technology | Purpose |
 |---|---|
-| **Express.js** | HTTP server & REST API framework |
-| **MongoDB + Mongoose** | Primary database & ODM |
-| **Redis (ioredis)** | OTP storage, JWT blacklist, rate limiting (with in-memory fallback) |
-| **Ganache** | Local Ethereum blockchain development node |
-| **MetaMask** | Wallet for tracking local blockchain accounts & ETH balances |
-| **Solidity (v0.8.20)** | `VotingSystem.sol` smart contract language |
-| **ethers.js (v6)** | Ethereum blockchain RPC & transaction provider |
-| **Socket.io** | Real-time vote & election status updates |
-| **Nodemailer** | OTP delivery via Gmail SMTP |
-| **bcryptjs** | Password hashing |
-| **jsonwebtoken** | JWT auth token generation & verification |
-| **helmet** | Secure HTTP headers |
-| **express-rate-limit** | API rate limiting |
-| **express-validator** | Request input validation |
+| **Express.js** | Fast, unopinionated REST API web framework |
+| **MongoDB + Mongoose** | Document database & ODM schema modeling |
+| **Redis (ioredis)** | High-speed cache for OTPs, JWT blacklist & rate limiting (with in-memory fallback) |
+| **Solidity (v0.8.20)** | Smart contract source language for `VotingSystem.sol` |
+| **solc (v0.8.37)** | Native Solidity compiler module |
+| **ethers.js (v6)** | Ethereum Web3 provider & contract transaction provider |
+| **Ganache** | Local Ethereum development blockchain node |
+| **MetaMask** | Browser Web3 wallet for tracking local gas & balances |
+| **Socket.io** | Server-side WebSocket engine for live broadcasts |
+| **Nodemailer** | SMTP email engine for sending 2FA OTP codes |
+| **bcryptjs** | Password hashing algorithm (12 salt rounds) |
+| **jsonwebtoken** | Secure JWT authentication token generator & verifier |
+| **helmet** | HTTP header security suite |
+| **express-rate-limit** | Endpoint rate limiting protection |
+| **express-validator** | Request payload validation & sanitization |
 
 ---
 
@@ -356,17 +375,6 @@ To view account balances and gas fee deductions in browser:
    * **Currency Symbol:** `ETH`
 3. Click **Import Account** and paste Account 0 private key from `backend/.env`.
 4. Switch network view to **`Ganache Local`** to see your **~999.99 ETH** balance update live with each cast vote!
-
-### Frontend
-| Technology | Purpose |
-|---|---|
-| **React 18** | UI framework |
-| **Vite** | Build tool & dev server |
-| **React Router v6** | Client-side routing |
-| **Axios** | HTTP client for API calls |
-| **Socket.io Client** | Real-time WebSocket connection |
-| **Lucide React** | Icon library |
-| **React Hot Toast** | Toast notifications |
 
 ---
 

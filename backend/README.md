@@ -140,28 +140,27 @@ Blockchain not configured (placeholder values detected) - running in mock mode
 
 Running `npm run seed` creates the following demo data:
 
-### Demo Admin
-| Admin ID | Password | Role |
-|---|---|---|
-| `ADMIN-001` | `Admin@1234` | SUPER_ADMIN |
-
-### Demo Voters
-| Voter ID | Password | Email | Booth |
+### Admin & Polling Officer Logins
+| Role | ID | Password | Access Scope |
 |---|---|---|---|
-| `VOTER-001` | `Voter@1234` | voter1@test.com | BOOTH-001 |
-| `VOTER-002` | `Voter@1234` | voter2@test.com | BOOTH-001 |
-| `VOTER-003` | `Voter@1234` | voter3@test.com | BOOTH-002 |
+| **Super Admin** | `ADMIN-001` | `Admin@1234` | Statewide Karnataka Overview & Election Control |
+| **Polling Officer** | `OFFICER-BTM` | `Officer@1234` | Booth 1 (St. John Auditorium) Assistant Portal |
 
-### Demo Booths
-`BOOTH-001` (City Hall) and `BOOTH-002` (Public Library)
+### Registered Voter Logins (10 Demo Voters across Karnataka)
+| Voter ID | Voter Name | EPIC Number | Constituency | Polling Station / Booth | Password |
+|---|---|---|---|---|---|
+| `VOTER-001` | Ramesh Kumar | `KA/01/172/100001` | BTM Layout (AC-172) | St. John Auditorium, Koramangala | `Test@1234` |
+| `VOTER-002` | Ananya Hegde | `KA/01/172/100002` | BTM Layout (AC-172) | St. John Auditorium, Koramangala | `Test@1234` |
+| `VOTER-003` | Syed Mustafa | `KA/01/172/100003` | BTM Layout (AC-172) | St. John Auditorium, Koramangala | `Test@1234` |
+| `VOTER-004` | Deepak Gowda | `KA/01/172/100004` | BTM Layout (AC-172) | Govt Primary School, Madiwala | `Test@1234` |
+| `VOTER-005` | Sunita Rao | `KA/01/172/100005` | BTM Layout (AC-172) | Govt Primary School, Madiwala | `Test@1234` |
+| `VOTER-006` | Vijay Prasad | `KA/01/173/100006` | Jayanagar (AC-173) | National College, Jayanagar 7th Block | `Test@1234` |
+| `VOTER-007` | Meenakshi Sundaram | `KA/01/173/100007` | Jayanagar (AC-173) | National College, Jayanagar 7th Block | `Test@1234` |
+| `VOTER-008` | Rahul Dravid | `KA/01/173/100008` | Jayanagar (AC-173) | National College, Jayanagar 7th Block | `Test@1234` |
+| `VOTER-009` | Kavya Rao | `KA/01/174/100009` | C.V. Raman Nagar (AC-174) | HAL Public School, Indiranagar | `Test@1234` |
+| `VOTER-010` | Mohammed Zameer | `KA/01/174/100010` | C.V. Raman Nagar (AC-174) | HAL Public School, Indiranagar | `Test@1234` |
 
-### Demo Candidates
-| Booth | Candidates |
-|---|---|
-| BOOTH-001 | John Miller (Independent), Sarah Wilson (Liberty Party) |
-| BOOTH-002 | David Chen (Future Alliance), Maria Garcia (Unity Group) |
-
-> **Note:** The voter emails are fake and will bounce. OTPs will be printed to the terminal during development.
+> **Note:** The voter emails are fake and will bounce. OTPs will be printed to the backend terminal for development.
 
 ---
 
