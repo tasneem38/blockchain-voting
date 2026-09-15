@@ -8,6 +8,9 @@
   <img src="https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb" />
   <img src="https://img.shields.io/badge/Redis-6+-DC382D?logo=redis" />
   <img src="https://img.shields.io/badge/Blockchain-Mock%20%7C%20Ethereum-627EEA?logo=ethereum" />
+  <a href="YOUR_DEMO_VIDEO_URL_HERE" target="_blank">
+    <img src="https://img.shields.io/badge/Demo-Watch%20Video-FF0000?logo=youtube&logoColor=white" alt="Demo Video" />
+  </a>
 </p>
 
 ---
@@ -15,7 +18,7 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Screenshots](#screenshots)
+- [Demo Video & Screenshots](#demo-video--screenshots)
 - [System Requirements](#system-requirements)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
@@ -58,6 +61,47 @@
 - 🔏 **Helmet** secure HTTP headers
 - ⛓️ **Blockchain mode** — switch between Mock (default) and live Ethereum
 - 📧 **Email OTP** via Gmail SMTP with App Password support
+
+---
+
+## Demo Video & Screenshots
+
+### 🎬 Demo Video
+Click the badge below to watch the video demonstration of the application:
+
+<p align="left">
+  <a href="YOUR_DEMO_VIDEO_URL_HERE" target="_blank">
+    <img src="https://img.shields.io/badge/▶%20Watch%20Demo-Video%20Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Demo Video" />
+  </a>
+</p>
+
+---
+
+### 📸 Application Screenshots
+
+#### 🔐 Authentication & 2FA Flow
+| Login Page | OTP Verification |
+|---|---|
+| ![Login Page](screenshots/Login_Page.png) | ![OTP Verification](screenshots/OTP_Verification.png) |
+
+#### 🗳️ Voter Experience
+| Election Voting Page | Voting Confirmation | Transaction Receipt |
+|---|---|---|
+| ![Election Voting](screenshots/Voter/Election_Voting.png) | ![Voting Confirmation](screenshots/Voter/Voting_Confirmation.png) | ![Transaction Receipt](screenshots/Voter/Transaction_Receipt.png) |
+
+#### 📊 Admin Control Panel
+| Live Admin Dashboard | Election Control |
+|---|---|
+| ![Admin Dashboard](screenshots/Admin/Admin_Dashboard.png) | ![Election Control](screenshots/Admin/Election_Control.png) |
+
+| Booth Management | Candidate Management | Voter Directory |
+|---|---|---|
+| ![Booth List](screenshots/Admin/Booth_List.png) | ![Candidate List](screenshots/Admin/Candidate_List.png) | ![Voter List](screenshots/Admin/Voter_List.png) |
+
+#### ⛓️ Audit Trail & Gas Architecture
+| Audit Log & Transaction Record | Gas Fee Breakdown |
+|---|---|
+| ![Transaction Record](screenshots/Transaction_Record.png) | ![Gas Explanation](screenshots/Gas_Explanation.png) |
 
 ---
 
