@@ -87,7 +87,7 @@ Click the badge below to watch the video demonstration of the application:
 #### 🗳️ Voter Experience
 | Election Voting Page | Voting Confirmation | Transaction Receipt |
 |---|---|---|
-| ![Election Voting](screenshots/Voter/Election_Voting.png) | ![Voting Confirmation](screenshots/Voter/Voting_Confirmation.png) | ![Transaction Receipt](screenshots/Voter/Transaction_Receipt.png) |
+| ![Election Voting](screenshots/Voter/Election_Voting.png) | ![Voting Confirmation](screenshots/Voter/Voting_Confirmation.png) | ![Transaction Receipt](screenshots/Voter/Transaction_receipt.png) |
 
 #### 📊 Admin Control Panel
 | Live Admin Dashboard | Election Control |
