@@ -15,11 +15,11 @@ async function main() {
     const provider = new ethers.JsonRpcProvider(rpcUrl);
     let wallet = new ethers.Wallet(privateKey, provider);
 
-    console.log(`📡 Connected to RPC: ${rpcUrl}`);
-    console.log(`🔑 Deploying from Account: ${wallet.address}`);
+    console.log(`Connected to RPC: ${rpcUrl}`);
+    console.log(`Deploying from Account: ${wallet.address}`);
 
     const balance = await provider.getBalance(wallet.address);
-    console.log(`💰 Account Balance: ${ethers.formatEther(balance)} ETH`);
+    console.log(`Account Balance: ${ethers.formatEther(balance)} ETH`);
 
     if (balance === 0n) {
         console.error(`\n❌ ERROR: Account ${wallet.address} has 0 ETH balance on Ganache!`);
@@ -48,7 +48,7 @@ async function main() {
             }
         };
 
-        console.log('⚙️ Compiling VotingSystem.sol...');
+        console.log('Compiling VotingSystem.sol...');
         const output = JSON.parse(solc.compile(JSON.stringify(input)));
 
         if (output.errors) {
@@ -65,7 +65,7 @@ async function main() {
 
         // Save ABI back to VotingSystem.json
         fs.writeFileSync(jsonPath, JSON.stringify({ contractName: 'VotingSystem', abi }, null, 2));
-        console.log('✅ Compiled successfully & updated backend/contracts/VotingSystem.json');
+        console.log('Compiled successfully & updated backend/contracts/VotingSystem.json');
     } catch (err) {
         console.log('⚠️ solc not found, reading existing VotingSystem.json...');
         const contractJson = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
@@ -78,12 +78,12 @@ async function main() {
     }
 
     const factory = new ethers.ContractFactory(abi, bytecode, wallet);
-    console.log('⏳ Deploying contract to Ganache...');
+    console.log('Deploying contract to Ganache...');
     const contract = await factory.deploy();
     await contract.waitForDeployment();
 
     const deployedAddress = await contract.getAddress();
-    console.log(`\n🎉 Smart Contract Deployed Successfully!`);
+    console.log(`\nSmart Contract Deployed Successfully!`);
     console.log(`📍 Contract Address: ${deployedAddress}`);
 
     // Update .env file with new CONTRACT_ADDRESS and ADMIN_PRIVATE_KEY
@@ -113,10 +113,10 @@ async function main() {
         console.log(`✅ Updated backend/.env with CONTRACT_ADDRESS=${deployedAddress}`);
     }
 
-    console.log('\n✨ You are ready! Restart your backend server (npm run dev) to run in LIVE Blockchain mode!');
+    console.log('\nYou are ready! Restart your backend server (npm run dev) to run in LIVE Blockchain mode!');
 }
 
 main().catch((error) => {
-    console.error('❌ Deployment failed:', error);
+    console.error('Deployment failed:', error);
     process.exit(1);
 });

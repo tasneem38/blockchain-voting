@@ -29,7 +29,7 @@ export default function AuditLogTable() {
       if (action !== 'ALL') params.action = action;
       const res = await api.get('/admin/audit', { params });
       setLogs(res.data.logs || res.data || []);
-      setTotal(res.data.total || 0);
+      setTotal(res.data.total || res.data.pagination?.total || 0);
     } catch {
       setLogs([]);
     } finally {
@@ -72,22 +72,28 @@ export default function AuditLogTable() {
               </td></tr>
             ) : logs.length === 0 ? (
               <tr><td colSpan={5} className="text-center py-10 text-slate-500">No audit logs found</td></tr>
-            ) : logs.map((log, i) => (
-              <tr key={log.id || i}
-                className={`border-b border-slate-700/50 hover:bg-slate-700/30 transition-colors ${i % 2 ? 'bg-slate-800/20' : ''}`}>
-                <td className="px-4 py-3 font-mono text-slate-400 text-xs whitespace-nowrap">{formatDate(log.timestamp)}</td>
-                <td className="px-4 py-3 font-mono text-xs">
-                  <span className="px-2 py-1 bg-slate-700/50 text-slate-300 rounded">{log.action}</span>
-                </td>
-                <td className="px-4 py-3 font-mono text-slate-300 text-xs">{log.actor}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs font-mono">{log.booth ?? '—'}</td>
-                <td className="px-4 py-3">
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${statusColor(log.status)}`}>
-                    {log.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
+            ) : logs.map((log, i) => {
+              const statusStr = log.success !== undefined ? (log.success ? 'SUCCESS' : 'FAILED') : (log.status || 'SUCCESS');
+              const actorStr = log.actorId || log.actor || (log.actorRole ? `${log.actorRole}` : 'System');
+              const boothStr = log.boothId || log.booth || '—';
+
+              return (
+                <tr key={log._id || log.id || i}
+                  className={`border-b border-slate-700/50 hover:bg-slate-700/30 transition-colors ${i % 2 ? 'bg-slate-800/20' : ''}`}>
+                  <td className="px-4 py-3 font-mono text-slate-400 text-xs whitespace-nowrap">{formatDate(log.timestamp)}</td>
+                  <td className="px-4 py-3 font-mono text-xs">
+                    <span className="px-2 py-1 bg-slate-700/50 text-slate-300 rounded">{log.action}</span>
+                  </td>
+                  <td className="px-4 py-3 font-mono text-slate-300 text-xs font-semibold">{actorStr}</td>
+                  <td className="px-4 py-3 text-slate-400 text-xs font-mono">{boothStr}</td>
+                  <td className="px-4 py-3">
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${statusColor(statusStr)}`}>
+                      {statusStr}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

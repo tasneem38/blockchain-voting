@@ -20,13 +20,13 @@ pnpm-debug.log*
 dist/
 build/
 out/
-
+~$BlockVote Phase 2.pptx
+BlockVote Phase 2.pptx
 # ============================
 # Logs
 # ============================
 logs/
 *.log
-
 # ============================
 # Cache
 # ============================
