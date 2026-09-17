@@ -171,7 +171,7 @@ export default function VotingPage() {
           </div>
           <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-slate-400 bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/40">
             <Lock className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Booth Restricted</span>
+            <span>Statewide Ballot</span>
           </div>
         </div>
 
@@ -179,11 +179,11 @@ export default function VotingPage() {
         {loading ? (
           <div className="flex flex-col items-center justify-center py-24 gap-4">
             <LoadingSpinner size={36} className="text-blue-400" />
-            <p className="text-slate-400 text-sm">Fetching candidates for {voterProfile?.booth?.constituency || 'your constituency'}…</p>
+            <p className="text-slate-400 text-sm">Fetching state election candidates…</p>
           </div>
         ) : candidates.length === 0 ? (
           <div className="text-center py-24 bg-slate-800/40 rounded-2xl border border-slate-700/40">
-            <p className="text-slate-400 font-medium">No candidates available for your assigned booth.</p>
+            <p className="text-slate-400 font-medium">No candidates available for this election.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">

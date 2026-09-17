@@ -60,71 +60,38 @@ const seed = async () => {
 
         const [booth1, booth2, booth3, booth4] = booths;
 
-        // ── 2. CANDIDATES (Karnataka State Assembly) ───────────────
+        // ── 2. CANDIDATES (Statewide - 4 Major Parties) ───────────────
         const candidates = await Candidate.insertMany([
-            // BTM Layout Candidates (Booth 1 & 2)
             {
                 candidateId: 'CAND-KA-01',
                 name: 'Ramalinga Reddy',
                 party: 'Indian National Congress (INC)',
-                constituency: 'BTM Layout (AC-172)',
+                constituency: 'Karnataka State Constituency',
                 electionType: 'Karnataka State Assembly',
-                boothId: booth1._id
             },
             {
                 candidateId: 'CAND-KA-02',
                 name: 'Sridhara Reddy',
                 party: 'Bharatiya Janata Party (BJP)',
-                constituency: 'BTM Layout (AC-172)',
+                constituency: 'Karnataka State Constituency',
                 electionType: 'Karnataka State Assembly',
-                boothId: booth1._id
             },
             {
                 candidateId: 'CAND-KA-03',
                 name: 'K. V. Gowda',
                 party: 'Janata Dal (Secular)',
-                constituency: 'BTM Layout (AC-172)',
+                constituency: 'Karnataka State Constituency',
                 electionType: 'Karnataka State Assembly',
-                boothId: booth1._id
             },
-
-            // Jayanagar Candidates (Booth 3)
             {
                 candidateId: 'CAND-KA-04',
-                name: 'C. K. Ramamurthy',
-                party: 'Bharatiya Janata Party (BJP)',
-                constituency: 'Jayanagar (AC-173)',
-                electionType: 'Karnataka State Assembly',
-                boothId: booth3._id
-            },
-            {
-                candidateId: 'CAND-KA-05',
-                name: 'Sowmya Reddy',
-                party: 'Indian National Congress (INC)',
-                constituency: 'Jayanagar (AC-173)',
-                electionType: 'Karnataka State Assembly',
-                boothId: booth3._id
-            },
-
-            // C.V. Raman Nagar Candidates (Booth 4)
-            {
-                candidateId: 'CAND-KA-06',
-                name: 'S. Raghu',
-                party: 'Bharatiya Janata Party (BJP)',
-                constituency: 'C.V. Raman Nagar (AC-174)',
-                electionType: 'Karnataka State Assembly',
-                boothId: booth4._id
-            },
-            {
-                candidateId: 'CAND-KA-07',
                 name: 'Anand Kumar',
-                party: 'Indian National Congress (INC)',
-                constituency: 'C.V. Raman Nagar (AC-174)',
+                party: 'Aam Aadmi Party (AAP)',
+                constituency: 'Karnataka State Constituency',
                 electionType: 'Karnataka State Assembly',
-                boothId: booth4._id
             },
         ]);
-        console.log(`Seeded ${candidates.length} Karnataka Assembly candidates.`);
+        console.log(`Seeded ${candidates.length} Statewide Karnataka Assembly candidates.`);
 
         // ── 3. REGISTERED VOTERS (EXACTLY 10 VOTERS) ──────────────
         const voters = await User.create([

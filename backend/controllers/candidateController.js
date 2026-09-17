@@ -8,8 +8,8 @@ const getCandidates = async (req, res) => {
     try {
         const { boothId } = req.user;
         
-        // Find all candidates registered for this specific booth
-        const candidates = await Candidate.find({ boothId })
+        // Fetch all candidates standing for the State Assembly Election (same for all booths)
+        const candidates = await Candidate.find({})
             .populate('boothId', 'location')
             .lean();
 

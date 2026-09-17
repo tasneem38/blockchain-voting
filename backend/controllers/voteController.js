@@ -29,14 +29,10 @@ const castVote = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Election is not open' });
         }
 
-        // 3. Validate candidate and booth alignment
+        // 3. Validate candidate existence
         const candidate = await Candidate.findOne({ candidateId: candidateId.toUpperCase() });
         if (!candidate) {
             return res.status(404).json({ success: false, message: 'Candidate not found' });
-        }
-
-        if (candidate.boothId.toString() !== user.boothId.toString()) {
-            return res.status(403).json({ success: false, message: 'This candidate is not registered for your booth' });
         }
 
         // 4. Double check blockchain for previous vote

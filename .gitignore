@@ -74,7 +74,8 @@ ENV/
 .coverage
 coverage.xml
 htmlcov/
-
+blockvote lt review.md 
+BlockVote_Methodology_Comparison_and_System_Analysis.md
 # Jupyter
 .ipynb_checkpoints/
 

@@ -48,9 +48,11 @@ export default function LoginForm() {
       navigate('/verify-otp');
     } catch (err) {
       const status = err.response?.status;
-      if (status === 401) toast.error('Invalid credentials');
-      else if (status === 423) toast.error('Account locked. Try after 30 minutes');
-      else toast.error('Login failed. Please try again.');
+      const serverMsg = err.response?.data?.message;
+      if (status === 401) toast.error(serverMsg || 'Invalid credentials');
+      else if (status === 423) toast.error(serverMsg || 'Account locked. Try after 30 minutes');
+      else if (status === 429) toast.error(serverMsg || 'Too many login attempts. Please wait a moment.');
+      else toast.error(serverMsg || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }

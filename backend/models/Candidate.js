@@ -35,8 +35,9 @@ const candidateSchema = new mongoose.Schema({
     boothId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Booth',
-        required: [true, 'Booth assignment is required'],
+        default: null,
     },
+
 }, { timestamps: true });
 
 candidateSchema.index({ boothId: 1 });
