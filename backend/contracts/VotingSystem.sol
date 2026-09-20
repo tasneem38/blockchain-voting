@@ -11,12 +11,12 @@ contract VotingSystem {
         uint256 voteCount;
     }
 
-    mapping(string => bool) public voterHasVoted;
+    mapping(bytes32 => bool) public voterHasVoted;
     mapping(string => uint256) public candidateVotes;
     string[] public candidateList;
     mapping(string => bool) private candidateExists;
 
-    event VoteCast(string indexed voterId, string candidateId, string boothId);
+    event VoteCast(bytes32 indexed voterHash, string boothId);
     event ElectionOpened(uint256 endTimestamp);
     event ElectionClosed();
 
@@ -50,9 +50,10 @@ contract VotingSystem {
     }
 
     function castVote(string calldata voterId, string calldata candidateId, string calldata boothId) external onlyWhenOpen {
-        require(!voterHasVoted[voterId], "Voter has already voted");
+        bytes32 voterHash = keccak256(abi.encodePacked(voterId));
+        require(!voterHasVoted[voterHash], "Voter has already voted");
 
-        voterHasVoted[voterId] = true;
+        voterHasVoted[voterHash] = true;
 
         if (!candidateExists[candidateId]) {
             candidateExists[candidateId] = true;
@@ -61,11 +62,12 @@ contract VotingSystem {
 
         candidateVotes[candidateId] += 1;
 
-        emit VoteCast(voterId, candidateId, boothId);
+        emit VoteCast(voterHash, boothId);
     }
 
     function hasVoted(string calldata voterId) external view returns (bool) {
-        return voterHasVoted[voterId];
+        bytes32 voterHash = keccak256(abi.encodePacked(voterId));
+        return voterHasVoted[voterHash];
     }
 
     function getResults() external view returns (CandidateResult[] memory) {

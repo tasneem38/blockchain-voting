@@ -42,6 +42,7 @@ async function main() {
                 'VotingSystem.sol': { content: source }
             },
             settings: {
+                evmVersion: 'shanghai',
                 outputSelection: {
                     '*': { '*': ['abi', 'evm.bytecode'] }
                 }

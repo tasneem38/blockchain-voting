@@ -53,10 +53,12 @@ const castVote = async (req, res) => {
         user.txHash = txHash;
         await user.save();
 
-        // 7. Log and Notify
-        await logAction('VOTE_CAST', voterId, 'VOTER', { 
+        // 7. Log and Notify (Anonymize audit log for ballot secrecy)
+        const crypto = require('crypto');
+        const voterHash = crypto.createHash('sha256').update(voterId || user.voterId).digest('hex');
+
+        await logAction('VOTE_CAST', voterHash, 'VOTER', { 
             txHash, 
-            candidateId, 
             boothId: user.boothId, 
             success: true 
         });

@@ -45,8 +45,8 @@ const castVoteOnChain = async (voterAddress, candidateId, boothId) => {
         const receipt = await tx.wait();
         return { txHash: receipt.hash, blockNumber: receipt.blockNumber };
     } catch (err) {
-        console.warn('RPC node call failed, using transaction hash fallback:', err.message);
-        return { txHash: '0x' + Math.random().toString(16).slice(2, 42), blockNumber: 123456 };
+        console.error('RPC node call failed during vote casting:', err.message);
+        throw new Error(`Blockchain transaction failed: ${err.message}`);
     }
 };
 

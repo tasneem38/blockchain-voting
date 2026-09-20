@@ -8,8 +8,9 @@ const getCandidates = async (req, res) => {
     try {
         const { boothId } = req.user;
         
-        // Fetch all candidates standing for the State Assembly Election (same for all booths)
-        const candidates = await Candidate.find({})
+        // Fetch candidates assigned to the voter's specific booth (or global candidates with no booth set)
+        const filter = boothId ? { $or: [{ boothId }, { boothId: null }] } : {};
+        const candidates = await Candidate.find(filter)
             .populate('boothId', 'location')
             .lean();
 
