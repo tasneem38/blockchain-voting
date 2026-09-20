@@ -49,8 +49,7 @@ contract VotingSystem {
         emit ElectionClosed();
     }
 
-    function castVote(string calldata voterId, string calldata candidateId, string calldata boothId) external onlyWhenOpen {
-        bytes32 voterHash = keccak256(abi.encodePacked(voterId));
+    function castVote(bytes32 voterHash, string calldata candidateId, string calldata boothId) external onlyAdmin onlyWhenOpen {
         require(!voterHasVoted[voterHash], "Voter has already voted");
 
         voterHasVoted[voterHash] = true;
@@ -65,8 +64,7 @@ contract VotingSystem {
         emit VoteCast(voterHash, boothId);
     }
 
-    function hasVoted(string calldata voterId) external view returns (bool) {
-        bytes32 voterHash = keccak256(abi.encodePacked(voterId));
+    function hasVoted(bytes32 voterHash) external view returns (bool) {
         return voterHasVoted[voterHash];
     }
 
