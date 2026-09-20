@@ -66,7 +66,7 @@ const castVote = async (req, res) => {
         // Emit socket update (io will be imported in server.js)
         const { io } = require('../server');
         if (io) {
-            io.emit('vote:update', { boothId: user.boothId, candidateId });
+            io.emit('vote:update', { boothId: user.boothId });
         }
 
         return res.status(200).json({ 
@@ -77,10 +77,11 @@ const castVote = async (req, res) => {
 
     } catch (err) {
         console.error('Vote Casting Error:', err.message);
-        await logAction('VOTE_REJECTED', voterId, 'VOTER', { 
+        const crypto = require('crypto');
+        const voterHash = crypto.createHash('sha256').update(voterId || req.user.voterId || 'UNKNOWN').digest('hex');
+        await logAction('VOTE_REJECTED', voterHash, 'VOTER', { 
             success: false, 
-            errorMessage: err.message,
-            candidateId 
+            errorMessage: err.message
         });
         return res.status(500).json({ success: false, message: err.message });
     }

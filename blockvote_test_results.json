@@ -1,0 +1,242 @@
+{
+  "when": "2026-09-20T15:04:00.635Z",
+  "solc": "0.8.37+commit.f401782d.Emscripten.clang",
+  "gas": {
+    "firstVoteForCandidate": 143500,
+    "repeatVoteExistingCandidate": 60954
+  },
+  "results": [
+    {
+      "id": "TC-01",
+      "layer": "Contract",
+      "title": "Deploy VotingSystem.sol; inspect initial state",
+      "expected": "electionOpen = false; admin = deployer",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-02",
+      "layer": "Contract",
+      "title": "castVote() while election is closed",
+      "expected": "Reverts: \"Election is not open\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-03",
+      "layer": "Contract",
+      "title": "openElection() called by a non-admin account",
+      "expected": "Reverts: \"Only admin can perform this action\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-04",
+      "layer": "Contract",
+      "title": "Admin opens election; first valid castVote()",
+      "expected": "Tx mined; VoteCast(voterHash, boothId) emitted; tally = 1; hash flagged",
+      "status": "PASS",
+      "note": "gas 143500"
+    },
+    {
+      "id": "TC-05",
+      "layer": "Contract",
+      "title": "Same voter ID submits a second vote",
+      "expected": "Reverts: \"Voter has already voted\"; tally unchanged",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-06",
+      "layer": "Contract",
+      "title": "Five distinct voters vote for two candidates; getResults()",
+      "expected": "Counts tally exactly (A = 3, B = 2)",
+      "status": "PASS",
+      "note": "gas (existing candidate) 60954"
+    },
+    {
+      "id": "TC-07",
+      "layer": "Contract",
+      "title": "castVote() after admin calls closeElection()",
+      "expected": "Reverts: \"Election is not open\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-08",
+      "layer": "Contract",
+      "title": "castVote() after the configured end timestamp",
+      "expected": "Reverts: \"Election period has ended\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-09",
+      "layer": "Contract",
+      "title": "castVote() sent directly from a non-relayer address",
+      "expected": "Reverts: \"Only admin can perform this action\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-10",
+      "layer": "Contract",
+      "title": "Repository compile settings (evmVersion shanghai) on Ganache 7.9.2; read candidateList() and getResults()",
+      "expected": "Both reads succeed; hasVoted(hash) works",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-11",
+      "layer": "Backend",
+      "title": "Login with a wrong password",
+      "expected": "401 \"Invalid credentials\"; attempt counter +1; LOGIN_FAILED logged",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-12",
+      "layer": "Backend",
+      "title": "Five consecutive wrong passwords, then the correct one",
+      "expected": "5th attempt: 423 and ACCOUNT_LOCKED (30 min); correct password still refused",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-13",
+      "layer": "Backend",
+      "title": "Correct Voter ID and password",
+      "expected": "200; 6-digit OTP stored; OTP_SENT logged; no JWT yet",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-14",
+      "layer": "Backend",
+      "title": "Wrong OTP three times, then the correct OTP",
+      "expected": "401 (2, 1, 0 attempts left); 4th attempt 429 even if correct",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-15",
+      "layer": "Backend",
+      "title": "OTP presented after its 300 s lifetime",
+      "expected": "410 \"OTP expired\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-16",
+      "layer": "Backend",
+      "title": "Login + correct OTP (fresh voter)",
+      "expected": "200 + JWT (30 min, voterId, boothId, jti); OTP consumed",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-17",
+      "layer": "Backend",
+      "title": "Logout, then reuse the same JWT",
+      "expected": "401 \"Session expired or logged out\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-18",
+      "layer": "Backend",
+      "title": "Voter-role token on an admin-only route",
+      "expected": "403 \"Admin access required\"; admin roles pass",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-19",
+      "layer": "Backend",
+      "title": "Voter casts a ballot while the election is closed",
+      "expected": "403 \"Election is not open\"; no on-chain vote",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-20",
+      "layer": "Backend",
+      "title": "Ballot for a candidate ID that does not exist",
+      "expected": "404 \"Candidate not found\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-21",
+      "layer": "Backend",
+      "title": "Valid ballot (live mode, real Ganache node)",
+      "expected": "200; real 32-byte tx hash mined (status 1); DB flag set; VOTE_CAST logged; vote:update emitted",
+      "status": "PASS",
+      "note": "gas 143625"
+    },
+    {
+      "id": "TC-22",
+      "layer": "Backend",
+      "title": "Same voter votes again (database layer)",
+      "expected": "403 \"You have already voted\"; chain tally still 1",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-23",
+      "layer": "Backend",
+      "title": "Database flag cleared (out of sync); voter votes again",
+      "expected": "403 \"Already voted on blockchain\"; chain tally still 1",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-24",
+      "layer": "Backend",
+      "title": "Inspect calldata and audit record of the accepted ballot from TC-21",
+      "expected": "Calldata holds keccak256(voterId), not the ID; candidate ID still plaintext; VOTE_CAST actor is a SHA-256 hash, no candidateId",
+      "status": "PASS",
+      "note": "pseudonymised, not secret"
+    },
+    {
+      "id": "TC-25",
+      "layer": "Backend",
+      "title": "Candidate list requested by voters of two different booths",
+      "expected": "Each sees own-booth + no-booth candidates only",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-26",
+      "layer": "Backend",
+      "title": "Admin deletes a voter who has already voted",
+      "expected": "400 \"Cannot delete voter who has already voted\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-27",
+      "layer": "Backend",
+      "title": "Admin deletes a candidate while the election is open",
+      "expected": "400 \"Cannot delete candidate while election is open\"",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-28",
+      "layer": "Backend",
+      "title": "Mock mode (placeholder .env): open election, cast ballot, no node running",
+      "expected": "200; election state kept in ElectionState; receipt is a random placeholder, not a mined 32-byte hash",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "id": "TC-29",
+      "layer": "Backend",
+      "title": "Live mode, Ganache node goes offline, then a ballot is cast",
+      "expected": "500 \"Blockchain transaction failed\"; voter not marked as voted; VOTE_REJECTED logged",
+      "status": "PASS",
+      "note": ""
+    }
+  ]
+}

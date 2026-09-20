@@ -36,12 +36,14 @@ try {
 
 
 
+const VOTE_SALT = process.env.VOTE_SALT || 'BlockVote2026SaltPepper';
+
 const castVoteOnChain = async (voterAddress, candidateId, boothId) => {
     if (isMockMode) {
         return { txHash: '0x' + Math.random().toString(16).slice(2, 42), blockNumber: 123456 };
     }
     try {
-        const voterHash = ethers.id(voterAddress.toString());
+        const voterHash = ethers.id(voterAddress.toString() + VOTE_SALT);
         const tx = await contract.castVote(voterHash, candidateId, boothId);
         const receipt = await tx.wait();
         return { txHash: receipt.hash, blockNumber: receipt.blockNumber };
@@ -54,7 +56,7 @@ const castVoteOnChain = async (voterAddress, candidateId, boothId) => {
 const hasVotedOnChain = async (voterAddress) => {
     if (isMockMode) return false;
     try {
-        const voterHash = ethers.id(voterAddress.toString());
+        const voterHash = ethers.id(voterAddress.toString() + VOTE_SALT);
         return await contract.hasVoted(voterHash);
     } catch (err) {
         return false;
