@@ -39,7 +39,7 @@
 
 ## See it in action 🎬
 
-[![BlockVote Demo](assets/brag.gif)](assets/brag.mp4)
+[![BlockVote Demo](assets/download.gif)](assets/brag.mp4)
 
 ---
 
