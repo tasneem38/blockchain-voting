@@ -39,7 +39,7 @@
 
 ## See it in action 🎬
 
-<video src="assets/brag.mp4" controls="controls" width="100%" autoplay loop muted></video>
+[![BlockVote Demo](assets/brag.gif)](assets/brag.mp4)
 
 ---
 
