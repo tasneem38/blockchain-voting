@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb" />
   <img src="https://img.shields.io/badge/Redis-6+-DC382D?logo=redis" />
   <img src="https://img.shields.io/badge/Blockchain-Mock%20%7C%20Ethereum-627EEA?logo=ethereum" />
-  <a href="YOUR_DEMO_VIDEO_URL_HERE" target="_blank">
+  <a href="assets/brag.mp4" target="_blank">
     <img src="https://img.shields.io/badge/Demo-Watch%20Video-FF0000?logo=youtube&logoColor=white" alt="Demo Video" />
   </a>
 </p>
@@ -70,7 +70,7 @@
 Click the badge below to watch the video demonstration of the application:
 
 <p align="left">
-  <a href="YOUR_DEMO_VIDEO_URL_HERE" target="_blank">
+  <a href="assets/brag.mp4" target="_blank">
     <img src="https://img.shields.io/badge/▶%20Watch%20Demo-Video%20Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Demo Video" />
   </a>
 </p>

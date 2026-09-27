@@ -36,7 +36,10 @@ try {
 
 
 
-const VOTE_SALT = process.env.VOTE_SALT || 'BlockVote2026SaltPepper';
+const VOTE_SALT = process.env.VOTE_SALT;
+if (!VOTE_SALT && process.env.NODE_ENV !== 'test') {
+    console.warn('⚠️ WARNING: VOTE_SALT not set in environment. Using default salt for local execution.');
+}
 
 const castVoteOnChain = async (voterAddress, candidateId, boothId) => {
     if (isMockMode) {

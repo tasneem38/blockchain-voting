@@ -55,7 +55,8 @@ const castVote = async (req, res) => {
 
         // 7. Log and Notify (Anonymize audit log for ballot secrecy)
         const crypto = require('crypto');
-        const voterHash = crypto.createHash('sha256').update(voterId || user.voterId).digest('hex');
+        const salt = process.env.VOTE_SALT || 'BlockVote2026SaltPepper';
+        const voterHash = crypto.createHash('sha256').update((voterId || user.voterId) + salt).digest('hex');
 
         await logAction('VOTE_CAST', voterHash, 'VOTER', { 
             txHash, 
@@ -78,7 +79,8 @@ const castVote = async (req, res) => {
     } catch (err) {
         console.error('Vote Casting Error:', err.message);
         const crypto = require('crypto');
-        const voterHash = crypto.createHash('sha256').update(voterId || req.user.voterId || 'UNKNOWN').digest('hex');
+        const salt = process.env.VOTE_SALT || 'BlockVote2026SaltPepper';
+        const voterHash = crypto.createHash('sha256').update((voterId || req.user?.voterId || 'UNKNOWN') + salt).digest('hex');
         await logAction('VOTE_REJECTED', voterHash, 'VOTER', { 
             success: false, 
             errorMessage: err.message

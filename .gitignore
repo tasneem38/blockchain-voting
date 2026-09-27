@@ -62,7 +62,8 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-
+.agents/
+skills-lock.json
 # Python Virtual Environments
 venv/
 .venv/
@@ -79,6 +80,7 @@ BlockVote_Methodology_Comparison_and_System_Analysis.md
 # Jupyter
 .ipynb_checkpoints/
 Booth-Based_Blockchain_Voting_System_BlockVote_6Pages.docx
+Booth-Based_Blockchain_Voting_System_BlockVote_v3.docx
 Booth-Based_Blockchain_Voting_System_BlockVote.docx
 # ============================
 # Database
@@ -173,3 +175,5 @@ mnemonic.txt
 *.swp
 *.swo
 *.orig
+brag-output/
+chrome/
