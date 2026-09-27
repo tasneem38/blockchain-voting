@@ -37,6 +37,12 @@
 
 ---
 
+## See it in action 🎬
+
+<video src="assets/brag.mp4" controls="controls" width="100%" autoplay loop muted></video>
+
+---
+
 ## Features
 
 ### For Voters
